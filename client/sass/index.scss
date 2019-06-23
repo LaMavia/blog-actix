@@ -1,0 +1,9 @@
+@import "./atoms/colors.scss";
+@import "./components/nav.scss";
+@import "./components/post.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

@@ -1,15 +1,11 @@
 #[macro_use]
 extern crate actix_web;
 use actix_files as fs;
-#[macro_use]
-extern crate serde_json;
 
 extern crate postgres;
 
 use actix_web::web;
 use actix_web::{middleware, App, HttpResponse, HttpServer};
-
-use handlebars::Handlebars;
 
 use std::io;
 use std::sync::Arc;
@@ -23,14 +19,25 @@ type DatabaseData<T> = Arc<Vec<T>>;
 type WebDb<T> = web::Data<DatabaseData<T>>;
 
 // Macro documentation can be found in the actix_web_codegen crate
-#[get("/")]
-fn index(hb: web::Data<Arc<Handlebars>>, users: WebDb<User>) -> HttpResponse {
-	let mut data = json!({
-		"users": &users.to_vec()
-	});
-
-	let body = hb.render("index", &data).unwrap();
-	HttpResponse::Ok().body(body)
+#[get("*")]
+fn index(users: WebDb<User>, posts: WebDb<Post>) -> HttpResponse {
+	HttpResponse::Ok().body(String::from(
+		"<!DOCTYPE html>
+			<html lang=\"en\">
+			
+			<head>
+				<meta charset=\"UTF-8\">
+				<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+				<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">
+				<title>Document</title>
+				<link rel=\"stylesheet\" href=\"/static/css/styles.css\">
+			</head>
+			<body>
+			<div id=\"root\"></div>
+			</body>
+			<script src=\"/js/Index.js\"></script>
+			</html>",
+	))
 }
 
 fn get_users(conn: &Connection) -> DatabaseData<User> {
@@ -47,7 +54,7 @@ fn get_users(conn: &Connection) -> DatabaseData<User> {
 	Arc::new(users)
 }
 
-fn get_posts(conn: &Connection) -> Vec<Post> {
+fn get_posts(conn: &Connection) -> DatabaseData<Post> {
 	let mut posts: Vec<Post> = vec![];
 
 	for p in conn
@@ -58,7 +65,7 @@ fn get_posts(conn: &Connection) -> Vec<Post> {
 		posts.push(Post::new(p.get(0), p.get(1), p.get(2), p.get(3), p.get(4)));
 	}
 
-	posts
+	Arc::new(posts)
 }
 
 fn connect_to_db() -> Connection {
@@ -70,18 +77,11 @@ fn connect_to_db() -> Connection {
 }
 
 fn main() -> io::Result<()> {
-	// Setup the Handlebars
-	let mut handlebars = Handlebars::new();
-	handlebars
-		.register_templates_directory(".hbs", "./routes")
-		.unwrap();
-	let handlebars_ref = web::Data::new(Arc::new(handlebars));
-
-	// Setup the Logger
+	// -------- Logger -------- //
 	std::env::set_var("RUST_LOG", "actix_web=info");
 	env_logger::init();
 
-	// Setup the PostgreSQL connection
+	// -------- PostgreSQL connection -------- //
 	let conn = connect_to_db();
 
 	let p = Post::new(
@@ -106,12 +106,12 @@ fn main() -> io::Result<()> {
 
 	HttpServer::new(move || {
 		App::new()
-			.register_data(handlebars_ref.clone())
 			.register_data(users_ref.clone())
 			.register_data(posts_ref.clone())
 			.wrap(middleware::Logger::new("%s %U %a"))
-			.service(index)
 			.service(fs::Files::new("/static", "./static"))
+			.service(fs::Files::new("/js", "./client/build"))
+			.service(index)
 	})
 	.bind("127.0.0.1:8000")?
 	.run()

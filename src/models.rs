@@ -1,5 +1,4 @@
 #![allow(dead_code)]
-extern crate chrono;
 extern crate postgres;
 use serde::{Deserialize, Serialize};
 

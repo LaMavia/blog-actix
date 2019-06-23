@@ -1,11 +1,92 @@
+:root {
+  --nav-top-h: 4rem;
+  --nav-w: 100vw;
+  --nav-items-w: calc(var(--nav-w) - var(--nav-top-h));
+}
+
+.nav {
+  position: fixed;
+  width: var(--nav-w);
+  height: 100vh;
+  background-color: #5f5f5f;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.nav__input {
+  height: var(--nav-top-h);
+  width: var(--nav-items-w);
+  background-color: #5f5f5f;
+  border: none;
+  color: #efefef;
+  font-size: calc(var(--nav-top-h) / 2.7);
+  padding-left: 5%;
+}
+.nav__burger {
+  position: absolute;
+  right: 0;
+  width: var(--nav-top-h);
+  height: var(--nav-top-h);
+  border: none;
+  background-color: #efefef;
+  color: #5f5f5f;
+  font-size: calc(var(--nav-top-h) / 2);
+}
+.nav__results {
+  width: var(--nav-items-w);
+  height: calc(100vh - var(--nav-top-h));
+  background-color: #efefef;
+  padding: 10px 50px 10px 10px;
+  list-style: none;
+}
+.nav__results__item {
+  margin-bottom: calc(var(--header-after-y) * 2);
+}
+
+:root {
+  --header-fs: 16px;
+  --header-after-y: 10px;
+}
+
+.header {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  position: relative;
+}
+.header::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, var(--header-after-y));
+  width: 50%;
+  height: 2px;
+  border-radius: 8px;
+  background-color: #5f5f5f;
+  will-change: transform;
+}
+.header--small {
+  --header-fs: 10px;
+}
+.header--small::after {
+  left: 0;
+  transform: translateY(var(--header-after-y));
+}
+.header__text {
+  font-weight: 100;
+  font-size: calc(var(--header-fs) * 3);
+}
+.header__bottom {
+  font-size: calc(var(--header-fs) * 1.5);
+}
+.header__bottom__author {
+  font-size: inherit;
+  margin-right: 10px;
+}
+.header__bottom__date {
+  font-size: inherit;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
-  background-color: #2c2c2c;
-  color: #fefefe;
-  text-align: center;
-}
+/*# sourceMappingURL=styles.css.map */

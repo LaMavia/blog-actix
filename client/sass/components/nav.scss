@@ -1,0 +1,49 @@
+@import '../atoms/colors.scss';
+
+:root {
+  --nav-top-h: 4rem;
+  --nav-w: 100vw;
+  --nav-items-w: calc(var(--nav-w) - var(--nav-top-h));
+}
+
+.nav {
+  position: fixed;
+  width: var(--nav-w);
+  height: 100vh;
+  background-color: $dark-grey;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+  &__input {
+    height: var(--nav-top-h);
+    width: var(--nav-items-w);
+    background-color: $dark-grey;
+    border: none;
+    color: $greyi-white;
+    font-size: calc(var(--nav-top-h) / 2.7);
+    padding-left: 5%;
+  }
+
+  &__burger {
+    position: absolute;
+    right: 0;
+    width: var(--nav-top-h);
+    height: var(--nav-top-h);
+    border: none;
+    background-color: $greyi-white;
+    color: $dark-grey;
+    font-size: calc(var(--nav-top-h) / 2);
+  }
+
+  &__results {
+    width: var(--nav-items-w);
+    height: calc(100vh - var(--nav-top-h));
+    background-color: $greyi-white;
+    padding: 10px 50px 10px 10px;
+    list-style: none;
+
+    &__item {
+      margin-bottom: calc(var(--header-after-y) * 2);
+    }
+  }
+}
