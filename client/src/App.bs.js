@@ -7,6 +7,8 @@ var React = require("react");
 var Belt_List = require("bs-platform/lib/js/belt_List.js");
 var Json_decode = require("@glennsl/bs-json/src/Json_decode.bs.js");
 var Nav$ReactHooksTemplate = require("./Nav.bs.js");
+var Post$ReactHooksTemplate = require("./Post.bs.js");
+var Helpers$ReactHooksTemplate = require("./Helpers.bs.js");
 
 function decodePost(json) {
   return /* record */[
@@ -35,14 +37,38 @@ function App(Props) {
                       }), state, action[0]);
         }), /* [] */0);
   var posts = match[0];
+  var match$1 = Helpers$ReactHooksTemplate.useState(undefined);
+  var post = match$1[0];
+  var match$2 = Helpers$ReactHooksTemplate.useState(true);
+  var isopen = match$2[0];
   if (List.length(posts) === 0) {
     fetchPosts(match[1]);
   }
+  if (List.length(posts) > 0 && post === undefined) {
+    Curry._1(match$1[1], List.nth(posts, 0));
+  }
   return React.createElement("section", {
-              className: ""
+              className: /* array */[
+                  "wrapper",
+                  isopen ? "open" : ""
+                ].join(" ")
             }, React.createElement(Nav$ReactHooksTemplate.make, {
-                  posts: posts
-                }), React.createElement("h1", undefined, "Hello there"));
+                  posts: posts,
+                  openness: /* tuple */[
+                    isopen,
+                    match$2[1]
+                  ]
+                }), React.createElement("div", {
+                  className: "content",
+                  onScroll: (function (e) {
+                      console.log(e.currentTarget.scrollx);
+                      return /* () */0;
+                    })
+                }, post !== undefined ? React.createElement(Post$ReactHooksTemplate.make, {
+                        post: post
+                      }) : React.createElement("h1", {
+                        className: "content__ph"
+                      }, Helpers$ReactHooksTemplate.str("Search for a post"))));
 }
 
 var make = App;

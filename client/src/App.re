@@ -38,13 +38,35 @@ let make = () => {
       [],
     );
 
-  if (List.length(posts) == 0) {
+  let (post: option(post), setpost) = useState(None);
+
+  let (isopen, setOpen) = useState(true);
+
+  if (posts |> List.length === 0) {
     dispatch |> fetchPosts;
     ();
   };
 
-  <section className="">
-    <Nav posts />
-    <h1> {"Hello there" |> React.string} </h1>
+  if (posts |> List.length > 0 && post === None) {
+    setpost(posts->List.nth(0)->Some);
+  };
+
+  <section
+    className={
+      [|"wrapper", if (isopen) {"open"} else {""}|] |> Js.Array.joinWith(" ")
+    }>
+    <Nav posts openness=(isopen, setOpen) />
+    <div
+      className="content"
+      onScroll={e => {
+        // e |> ReactEvent.UI.preventDefault;
+        e->ReactEvent.UI.currentTarget##scrollx |> Js_console.log;
+        ();
+      }}>
+      {switch (post) {
+       | Some(post) => <Post post />
+       | None => <h1 className="content__ph"> "Search for a post"->str </h1>
+       }}
+    </div>
   </section>;
 };

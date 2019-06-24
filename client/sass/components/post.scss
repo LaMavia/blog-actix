@@ -1,10 +1,11 @@
 :root {
   --header-fs: 16px;
-  --header-after-y: 10px;
+  --header-after-y: 20px;
 }
 
 .header {
   position: relative;
+  text-align: center;
 
   &::after {
     content: "";
@@ -19,21 +20,33 @@
   }
  
   &--small {
-    --header-fs: 10px;
-
     &::after {
       left: 0;
       transform: translateY(var(--header-after-y));
+    }
+
+    * {
+      text-align: left;
+    }
+
+    .header {
+      &__text {
+        font-size: 30px;
+      }
+
+      &__bottom {
+        font-size: 20px;
+      }
     }
   }
 
   &__text {
     font-weight: 100;
-    font-size: calc(var(--header-fs) * 3);
+    font-size: 3rem;
   }
 
   &__bottom {
-    font-size: calc(var(--header-fs) * 2);
+    font-size: 1.3rem;
 
     &__author {
       font-size: inherit;
@@ -47,5 +60,17 @@
 }
 
 .post {
-  
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #fbfbfb;
+
+  &__body {
+    width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+    white-space: pre;
+    font-size: 1rem;
+  }
 }

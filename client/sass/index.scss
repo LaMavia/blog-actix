@@ -25,3 +25,37 @@ body {
   overflow-x: hidden;
   color: #4F4F4F;// #64788a;
 }
+
+.wrapper {
+  width: calc(100vw + var(--nav-w));
+  height: 100vh;
+  transition: transform .25s 0s ease-in-out;
+  will-change: transform;
+  transform: translateX(calc(var(--nav-w) * -1)) translateZ(0);
+  display: flex;
+  flex-flow: row nowrap;
+  backface-visibility: hidden;  
+}
+
+.open {
+  transform: translateX(0);
+
+  .nav__form__burger {
+    transform: translateX(0);
+  }
+}
+
+.content {
+  width: 100vw;
+  @include desktop {
+    width: calc(100vw - var(--nav-w));
+  }
+  
+  &__ph {
+    font-size: 2rem;
+    text-align: center;
+    line-height: 100vh;
+    text-transform: capitalize;
+    font-weight: 200;
+  }
+}

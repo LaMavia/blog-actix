@@ -4,28 +4,22 @@
 var $$Array = require("bs-platform/lib/js/array.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
-var Belt_List = require("bs-platform/lib/js/belt_List.js");
 var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var Post$ReactHooksTemplate = require("./Post.bs.js");
 var Helpers$ReactHooksTemplate = require("./Helpers.bs.js");
 
 function Nav(Props) {
   var posts = Props.posts;
-  var match = Helpers$ReactHooksTemplate.useState(true);
-  var setOpen = match[1];
-  Helpers$ReactHooksTemplate.useState("");
+  var openness = Props.openness;
+  var match = Helpers$ReactHooksTemplate.useState("");
+  var setOpen = openness[1];
+  var isOpen = openness[0];
+  var setSearch = match[1];
+  var searchStr = match[0];
   return React.createElement("nav", {
-              className: Belt_List.reduce(/* :: */[
-                    "nav",
-                    /* :: */[
-                      match[0] ? "nav--open" : "",
-                      /* [] */0
-                    ]
-                  ], "", (function (acc, x) {
-                      return acc + (" " + x);
-                    }))
+              className: "nav"
             }, React.createElement("form", {
-                  action: "",
+                  className: "nav__form",
                   onSubmit: (function (e) {
                       e.preventDefault();
                       return /* () */0;
@@ -34,22 +28,30 @@ function Nav(Props) {
                       "aria-label": "posts search",
                       className: "nav__form__input",
                       placeholder: "Search",
-                      type: "text"
+                      type: "text",
+                      onChange: (function (e) {
+                          return Curry._1(setSearch, e.currentTarget.value);
+                        })
                     }), React.createElement("button", {
                       className: "nav__form__burger",
                       onClick: (function (e) {
                           e.preventDefault();
-                          return Curry._1(setOpen, false);
+                          return Curry._1(setOpen, !isOpen);
                         })
-                    }, Helpers$ReactHooksTemplate.str("X"))), React.createElement("ol", {
+                    }, Helpers$ReactHooksTemplate.str(isOpen ? "X" : ">"))), React.createElement("ol", {
                   className: "nav__results"
-                }, Belt_Array.mapWithIndex($$Array.of_list(posts), (function (i, p) {
-                        return React.createElement("li", {
-                                    key: String(i),
-                                    className: "nav__results__item"
-                                  }, React.createElement(Post$ReactHooksTemplate.Header[/* small */0], {
-                                        post: p
-                                      }));
+                }, Belt_Array.reduceWithIndex($$Array.of_list(posts), /* array */[], (function (acc, p, i) {
+                        if (new RegExp(searchStr, "ig").test(p[/* title */3])) {
+                          var a = /* array */[React.createElement("li", {
+                                  key: String(i),
+                                  className: "nav__results__item"
+                                }, React.createElement(Post$ReactHooksTemplate.Header[/* small */0], {
+                                      post: p
+                                    }))];
+                          return Belt_Array.concat(acc, a);
+                        } else {
+                          return acc;
+                        }
                       }))));
 }
 

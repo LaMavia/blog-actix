@@ -11,7 +11,7 @@ function Post$Header$small(Props) {
   return React.createElement("div", {
               className: "header header--small",
               style: style
-            }, React.createElement("h1", {
+            }, React.createElement("h2", {
                   className: "header__text"
                 }, Helpers$ReactHooksTemplate.str(post[/* title */3])), React.createElement("div", {
                   className: "header__bottom"
@@ -24,7 +24,7 @@ function Post$Header$small(Props) {
 
 function Post$Header(Props) {
   var post = Props.post;
-  return React.createElement("div", {
+  return React.createElement("header", {
               className: "header"
             }, React.createElement("h1", {
                   className: "header__text"
@@ -44,9 +44,13 @@ var Header = /* module */[
 
 function Post(Props) {
   var post = Props.post;
-  return React.createElement("article", undefined, React.createElement(Post$Header, {
+  return React.createElement("article", {
+              className: "post"
+            }, React.createElement(Post$Header, {
                   post: post
-                }));
+                }), React.createElement("p", {
+                  className: "post__body"
+                }, Helpers$ReactHooksTemplate.str(post[/* body */4])));
 }
 
 var make = Post;
