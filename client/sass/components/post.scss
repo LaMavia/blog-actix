@@ -4,7 +4,6 @@
 }
 
 .header {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   position: relative;
 
   &::after {
@@ -12,7 +11,7 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%, var(--header-after-y));
-    width: 50%;
+    width: 33%;
     height: 2px;
     border-radius: 8px;
     background-color: $dark-grey;
@@ -34,7 +33,7 @@
   }
 
   &__bottom {
-    font-size: calc(var(--header-fs) * 1.5);
+    font-size: calc(var(--header-fs) * 2);
 
     &__author {
       font-size: inherit;

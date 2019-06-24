@@ -14,25 +14,27 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
-  &__input {
-    height: var(--nav-top-h);
-    width: var(--nav-items-w);
-    background-color: $dark-grey;
-    border: none;
-    color: $greyi-white;
-    font-size: calc(var(--nav-top-h) / 2.7);
-    padding-left: 5%;
-  }
+  &__form {
+    &__input {
+      height: var(--nav-top-h);
+      width: var(--nav-items-w);
+      background-color: $dark-grey;
+      border: none;
+      color: $greyi-white;
+      font-size: calc(var(--nav-top-h) / 2.7);
+      padding-left: 1.5rem;
+    }
 
-  &__burger {
-    position: absolute;
-    right: 0;
-    width: var(--nav-top-h);
-    height: var(--nav-top-h);
-    border: none;
-    background-color: $greyi-white;
-    color: $dark-grey;
-    font-size: calc(var(--nav-top-h) / 2);
+    &__burger {
+      position: absolute;
+      right: 0;
+      width: var(--nav-top-h);
+      height: var(--nav-top-h);
+      border: none;
+      background-color: $greyi-white;
+      color: $dark-grey;
+      font-size: calc(var(--nav-top-h) / 2);
+    }
   }
 
   &__results {
@@ -41,6 +43,7 @@
     background-color: $greyi-white;
     padding: 10px 50px 10px 10px;
     list-style: none;
+    overflow-y: auto;
 
     &__item {
       margin-bottom: calc(var(--header-after-y) * 2);

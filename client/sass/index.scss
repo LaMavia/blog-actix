@@ -1,9 +1,27 @@
-@import "./atoms/colors.scss";
-@import "./components/nav.scss";
-@import "./components/post.scss";
+@import './atoms/colors.scss';
+@import './components/nav.scss';
+@import './components/post.scss';
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.root {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: #4F4F4F;// #64788a;
 }
