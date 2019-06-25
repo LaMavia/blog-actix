@@ -43,11 +43,18 @@ body {
   .nav__form__burger {
     transform: translateX(0);
   }
+
+  .content {
+    transform: none;
+  }
 }
 
 .content {
   width: 100vw;
+  transition: transform .25s 0s ease-in-out;
+  
   @include desktop {
+    transform: translateX(calc(50vw - 50%));
     width: calc(100vw - var(--nav-w));
   }
   

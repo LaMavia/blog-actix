@@ -1,6 +1,9 @@
+@import '../atoms/breakpoints.scss';
+
 :root {
   --header-fs: 16px;
   --header-after-y: 20px;
+  --post-body-w: calc(50vw - var(--nav-w) / 2);
 }
 
 .header {
@@ -65,12 +68,22 @@
   overflow-y: auto;
   overflow-x: hidden;
   background-color: #fbfbfb;
+  padding: 20px 0;
+
+  @include desktop {
+    width: calc(100vw - var(--nav-w));
+  }
 
   &__body {
     width: 100%;
+    margin: auto;
     padding: 20px;
     margin-top: 20px;
-    white-space: pre;
+    white-space: pre-line;
     font-size: 1rem;
+
+    @include desktop {
+      width: 40rem;
+    }
   }
 }

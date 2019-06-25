@@ -32,9 +32,9 @@
       font-size: calc(var(--nav-top-h) / 2.7);
       padding-left: 1.5rem;
 
-      @include desktop {
-        width: 100%;
-      }
+      // @include desktop {
+      //   width: 100%;
+      // }
     }
 
     &__burger {
@@ -50,9 +50,9 @@
       transition: transform .25s 0s ease-in-out;
       will-change: transform;
       z-index: 10;
-      @include desktop {
-        display: none;
-      }
+      // @include desktop {
+      //   display: none;
+      // }
     }
   }
 
