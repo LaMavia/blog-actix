@@ -39,6 +39,6 @@ fn main() -> io::Result<()> {
 			.service(routes::post::all)
 			.service(routes::index::route)
 	})
-	.bind("127.0.0.1:8000")?
+	.bind(format!("0.0.0.0:{}", std::env::var("PORT").unwrap()))?
 	.run()
 }
