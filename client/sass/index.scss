@@ -52,7 +52,8 @@ body {
 .content {
   width: 100vw;
   transition: transform .25s 0s ease-in-out;
-  
+  overflow-y: auto;
+
   @include desktop {
     transform: translateX(calc(50vw - 50%));
     width: calc(100vw - var(--nav-w));

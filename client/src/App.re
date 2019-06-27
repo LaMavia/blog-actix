@@ -38,7 +38,7 @@ let make = () => {
       [],
     );
 
-  let (post: option(post), setpost) = useState(None);
+  let (post: option(post), setPost) = useState(None);
 
   let (isopen, setOpen) = useState(true);
 
@@ -48,14 +48,14 @@ let make = () => {
   };
 
   if (posts |> List.length > 0 && post === None) {
-    setpost(posts->List.nth(0)->Some);
+    setPost(posts->List.nth(0)->Some);
   };
 
   <section
     className={
       [|"wrapper", if (isopen) {"open"} else {""}|] |> Js.Array.joinWith(" ")
     }>
-    <Nav posts openness=(isopen, setOpen) />
+    <Nav posts openness=(isopen, setOpen) setPost />
     <div
       className="content"
       onScroll={e => {

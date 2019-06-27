@@ -2,12 +2,14 @@ open Helpers;
 open Globals;
 
 [@react.component]
-let make = (~posts: list(post), ~openness) => {
+let make = (~posts: list(post), ~openness, ~setPost) => {
   let (searchStr, setSearch) = useState("");
   let (isOpen, setOpen) = openness;
   // flex-column
   <nav className="nav">
-    <form className="nav__form" onSubmit={e => e |> ReactEvent.Form.preventDefault}>
+    <form
+      className="nav__form"
+      onSubmit={e => e |> ReactEvent.Form.preventDefault}>
       <input
         ariaLabel="posts search"
         className="nav__form__input"
@@ -34,7 +36,16 @@ let make = (~posts: list(post), ~openness) => {
                   )) {
              let a = [|
                <li className="nav__results__item" key={i |> string_of_int}>
-                 <Post.Header.small post=p />
+                 <a
+                   className="nav__results__item__link"
+                   href=""
+                   onClick={e => {
+                     e |> ReactEvent.Mouse.preventDefault;
+                     p->Some->setPost;
+                     setOpen(false);
+                   }}>
+                   <Post.Header.small post=p />
+                 </a>
                </li>,
              |];
              Belt.Array.concat(acc, a);

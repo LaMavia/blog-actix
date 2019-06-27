@@ -67,6 +67,11 @@
 
     &__item {
       margin-bottom: calc(var(--header-after-y) * 2);
+
+      &__link {
+        text-decoration: none;
+        color: currentColor;
+      }
     }
   }
 }

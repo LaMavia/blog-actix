@@ -63,27 +63,23 @@
 }
 
 .post {
-  width: 100vw;
+  width: 100%;//100vw;
   height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: visible;
   background-color: #fbfbfb;
   padding: 20px 0;
+  margin: auto;
 
   @include desktop {
-    width: calc(100vw - var(--nav-w));
+    width: 40rem;//calc(100vw - var(--nav-w));
   }
 
   &__body {
     width: 100%;
-    margin: auto;
     padding: 20px;
     margin-top: 20px;
     white-space: pre-line;
     font-size: 1rem;
-
-    @include desktop {
-      width: 40rem;
-    }
+    font-size: 18px;
   }
 }

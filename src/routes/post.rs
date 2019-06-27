@@ -1,18 +1,19 @@
-use crate::db::{connect_to_db, models};
+use crate::db;
 use actix_web;
 use actix_web::HttpResponse;
+use db::models::JsonyPost;
 
 #[get("api/posts")]
 pub fn all() -> HttpResponse {
-  let conn = connect_to_db();
-  let mut posts = vec![];
+  let conn = db::connect_to_db();
+  let posts = db::actions::get_posts(&conn);
+  let mut ps: Vec<JsonyPost> = vec![];
 
-  // -------- Warning for a future me -------- //
-  // It's not really efficent, but I don't expect any traction on the website, so...
-  for p in conn.query("SELECT posts.id, users.login, posts.date, posts.title, posts.body FROM posts INNER JOIN users ON posts.author = users.id", &[]).unwrap().into_iter()
-  {
-    posts.push(models::QueriedPost::new(p.get(0), p.get(1), p.get(2), p.get(3), p.get(4)));
-  };
+  for (p, u) in posts.iter().as_ref() {
+    ps.push(JsonyPost::new(
+      p.id, &*u.login, &*p.date, &*p.title, &*p.body,
+    ));
+  }
 
-  HttpResponse::Ok().body(json!(&posts).to_string())
+  HttpResponse::Ok().body(json!(ps).to_string())
 }

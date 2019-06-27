@@ -1,76 +1,68 @@
-#![allow(dead_code)]
+#[allow(dead_code)]
+use super::schema::{posts, users};
 use serde::{Deserialize, Serialize};
+use diesel::{QueryDsl, RunQueryDsl};
 
-pub trait Model {
-  fn insert() -> &'static str;
-}
-#[derive(Serialize, Deserialize, Clone)]
-pub struct User {
-  id: i32,
-  login: String,
-  password: String,
-}
-
-impl Model for User {
-  fn insert() -> &'static str {
-    "INSERT INTO users (login, password) VALUES ($1, $2)"
-  }
-}
-
-impl User {
-  pub fn new(id: i32, login: String) -> User {
-    User {
-      id,
-      login,
-      password: String::new(),
-    }
-  }
-}
-
-#[derive(Clone,PartialEq,Eq,PartialOrd,Ord,Hash,Debug,Serialize,Deserialize)]
+#[derive(Queryable, QueryableByName, Serialize, Deserialize)]
+#[table_name="posts"]
 pub struct Post {
-  id: i32,
-  author: i32,
-  date: String,
-  title: String,
-  body: String,
+  pub id: i32,
+  pub author: i32,
+  pub date: String,
+  pub title: String,
+  pub body: String,
 }
 
-impl Model for Post {
-  fn insert() -> &'static str {
-    "INSERT INTO posts (id, author, date, title, body) VALUES ($1, $2, $3, $4, $5)"
-  }
+#[derive(Queryable, QueryableByName, Serialize, Deserialize)]
+#[table_name="users"]
+pub struct User {
+  pub id: i32,
+  pub login: String,
+  pub password: String,
 }
+
+type DieselResult<T> = Result<T, diesel::result::Error>;
 
 impl Post {
-  pub fn new(id: i32, author: i32, date: String, title: String, body: String) -> Post {
-    Post {
-      id,
-      author,
-      date,
-      title,
-      body,
-    }
+  pub fn with_users(c: &diesel::PgConnection) -> DieselResult<Vec<(Post, User)>> {
+    posts::table.inner_join(users::table).load(c) 
   }
 }
 
-#[derive(Clone,PartialEq,Eq,PartialOrd,Ord,Hash,Debug,Serialize,Deserialize)]
-pub struct QueriedPost {
-  id: i32,
-  author: String,
-  date: String,
-  title: String,
-  body: String,
+#[derive(Insertable)]
+#[table_name="posts"]
+pub struct NewPost<'a> {
+  pub author: i32,
+  pub date: &'a str,
+  pub title: &'a str,
+  pub body: &'a str,
 }
 
-impl QueriedPost {
-  pub fn new(id: i32, author: String, date: String, title: String, body: String) -> QueriedPost {
-    QueriedPost {
+#[derive(Insertable)]
+#[table_name="users"]
+pub struct NewUser<'a> {
+  pub login: &'a str,
+  pub password: &'a str,
+}
+
+
+#[derive(Serialize, Deserialize)]
+pub struct JsonyPost {
+  pub id: i32,
+  pub author: String,
+  pub date: String,
+  pub title: String,
+  pub body: String
+}
+
+impl JsonyPost {
+  pub fn new<'a>(id: i32, author: &'a str, date: &'a str, title: &'a str, body: &'a str) -> JsonyPost {
+    JsonyPost {
       id,
-      author,
-      date,
-      title,
-      body,
+      author: author.to_string(),
+      date: date.to_string(),
+      title: title.to_string(),
+      body: body.to_string()
     }
   }
 }

@@ -38,6 +38,7 @@ function App(Props) {
         }), /* [] */0);
   var posts = match[0];
   var match$1 = Helpers$ReactHooksTemplate.useState(undefined);
+  var setPost = match$1[1];
   var post = match$1[0];
   var match$2 = Helpers$ReactHooksTemplate.useState(true);
   var isopen = match$2[0];
@@ -45,7 +46,7 @@ function App(Props) {
     fetchPosts(match[1]);
   }
   if (List.length(posts) > 0 && post === undefined) {
-    Curry._1(match$1[1], List.nth(posts, 0));
+    Curry._1(setPost, List.nth(posts, 0));
   }
   return React.createElement("section", {
               className: /* array */[
@@ -57,7 +58,8 @@ function App(Props) {
                   openness: /* tuple */[
                     isopen,
                     match$2[1]
-                  ]
+                  ],
+                  setPost: setPost
                 }), React.createElement("div", {
                   className: "content",
                   onScroll: (function (e) {

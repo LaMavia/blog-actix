@@ -11,6 +11,7 @@ var Helpers$ReactHooksTemplate = require("./Helpers.bs.js");
 function Nav(Props) {
   var posts = Props.posts;
   var openness = Props.openness;
+  var setPost = Props.setPost;
   var match = Helpers$ReactHooksTemplate.useState("");
   var setOpen = openness[1];
   var isOpen = openness[0];
@@ -45,9 +46,17 @@ function Nav(Props) {
                           var a = /* array */[React.createElement("li", {
                                   key: String(i),
                                   className: "nav__results__item"
-                                }, React.createElement(Post$ReactHooksTemplate.Header[/* small */0], {
-                                      post: p
-                                    }))];
+                                }, React.createElement("a", {
+                                      className: "nav__results__item__link",
+                                      href: "",
+                                      onClick: (function (e) {
+                                          e.preventDefault();
+                                          Curry._1(setPost, p);
+                                          return Curry._1(setOpen, false);
+                                        })
+                                    }, React.createElement(Post$ReactHooksTemplate.Header[/* small */0], {
+                                          post: p
+                                        })))];
                           return Belt_Array.concat(acc, a);
                         } else {
                           return acc;

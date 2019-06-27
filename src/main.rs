@@ -5,12 +5,26 @@ extern crate actix_files as fs;
 #[macro_use]
 extern crate serde_json;
 
+#[macro_use]
+extern crate diesel;
+extern crate dotenv;
+
 use actix_web::{middleware, App, HttpServer};
 use std::io;
 mod db;
 mod routes;
 
+use dotenv::dotenv;
+
 fn main() -> io::Result<()> {
+	// -------- Check for / load DATABASE_URL $env -------- //
+	match std::env::var("DATABASE_URL").ok() {
+		Some(_) => {}
+		None => {
+			dotenv().ok();
+			();
+		}
+	}
 	// -------- Logger -------- //
 	std::env::set_var("RUST_LOG", "actix_web=info");
 	env_logger::init();
