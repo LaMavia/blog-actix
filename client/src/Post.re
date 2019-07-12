@@ -34,6 +34,6 @@ module Header = {
 let make = (~post: post) => {
   <article className="post">
     <Header post />
-    <p className="post__body"> post.body->str </p>
+    <p className="post__body" dangerouslySetInnerHTML={{"__html": post.body}}></p>
   </article>;
 };

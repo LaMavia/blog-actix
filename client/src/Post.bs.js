@@ -49,8 +49,11 @@ function Post(Props) {
             }, React.createElement(Post$Header, {
                   post: post
                 }), React.createElement("p", {
-                  className: "post__body"
-                }, Helpers$ReactHooksTemplate.str(post[/* body */4])));
+                  className: "post__body",
+                  dangerouslySetInnerHTML: {
+                    __html: post[/* body */4]
+                  }
+                }));
 }
 
 var make = Post;
